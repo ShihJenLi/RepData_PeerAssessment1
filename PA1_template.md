@@ -132,6 +132,8 @@ median(stepsperDay$x) -> median_2
 
 stepsperInterval<-aggregate(xAct1$steps, by=list(xAct1$interval), FUN=mean, na.rm=TRUE)
 ```
+The daily mean after replacing missing value is `r mean_2'
+The daily median after replacing missing value is 'r median_2'
 
 
 ```r
@@ -144,13 +146,6 @@ plot(stepsperInterval$Group.1, stepsperInterval$x, type="l", xlab="Interval", yl
 
 ```r
 library(lattice)
-```
-
-```
-## Warning: package 'lattice' was built under R version 3.1.2
-```
-
-```r
 xAct1$date <- as.Date(xAct1$date, format="%Y-%m-%d")
 xAct1$WDay <- weekdays(xAct1$date)
 xAct1$dayType[xAct1$WDay=="Sunday"]<-"weekend"
@@ -158,7 +153,10 @@ xAct1$dayType[xAct1$WDay=="Saturday"]<-"weekend"
 xAct1$dayType[is.na(xAct1$dayType)]<-"weekday"
 xAct1$dayType<-as.factor(xAct1$dayType)
 stepsper5<-aggregate(xAct1$steps, by=list(xAct1$interval, xAct1$dayType), FUN=mean, na.rm=TRUE)
-xyplot(stepsper5$x~stepsper5$Group.1|stepsper5$Group.2, layout=c(1,2), type="l", xlab="Interval", ylab="Number of steps")
+
+xyplot(stepsper5$x~stepsper5$Group.1|stepsper5$Group.2, layout=c(1,2), type="l", xlab="Interval", ylab="Number of steps", 
+       main = paste("Weekends vs. Weekdays Daily Activity Pattern"))
 ```
 
 ![](PA1_template_files/figure-html/xyplot-1.png) 
+### The weekends and weekdays activity paterns do show the differences. 
